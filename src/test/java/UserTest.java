@@ -3,8 +3,8 @@ import dao.UserDao;
 import dto.EntityDto;
 import dto.UserDto;
 import extentions.Extention;
-import jdk.jfr.Description;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import steps.UserSteps;
@@ -24,7 +24,7 @@ public class UserTest extends UserSteps {
   }
 
   @Test
-  @Description("Проверка создания пользователя")
+  @DisplayName("Проверка создания пользователя")
   public void shouldCreateUser() {
 
     EntityDto entityDto = createUserWithDto(userDto);
@@ -35,7 +35,7 @@ public class UserTest extends UserSteps {
   }
 
   @Test
-  @Description("Получить информацию о несуществующем пользователе")
+  @DisplayName("Получить информацию о несуществующем пользователе")
   public void shouldNotReturnUserInfo() {
 
     EntityDto entityDto = getUserEntityByName("invalidName");
@@ -43,7 +43,7 @@ public class UserTest extends UserSteps {
   }
 
   @Test
-  @Description("Логин пользователя")
+  @DisplayName("Логин пользователя")
   public void shouldLoginWithCreatedUser() {
 
     UserDto userDto = UserDao.createRandomUser();
@@ -54,7 +54,7 @@ public class UserTest extends UserSteps {
   }
 
   @Test
-  @Description("Выход пользователя")
+  @DisplayName("Выход пользователя")
   public void shouldLogOutCurrentUser() {
 
     EntityDto logOutPayload = loginOut();
