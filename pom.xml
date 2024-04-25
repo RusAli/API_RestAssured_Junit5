@@ -109,21 +109,6 @@
     </dependencies>
 
 
-    <profiles>
-        <profile>
-            <id>production</id>
-            <properties>
-                <webdriver.base.url>https://otus.ru</webdriver.base.url>
-            </properties>
-        </profile>
-        <profile>
-            <id>test</id>
-            <properties>
-                <webdriver.base.url>https://test.otus.ru</webdriver.base.url>
-            </properties>
-        </profile>
-    </profiles>
-
     <build>
         <plugins>
             <plugin>
@@ -145,6 +130,9 @@
                     </argLine>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+                        <junit.jupiter.execution.parallel.config.fixed.parallelism>${parallel}</junit.jupiter.execution.parallel.config.fixed.parallelism>
+                        <java.version>${maven.compiler.source}</java.version>
                     </systemPropertyVariables>
                 </configuration>
 
