@@ -12,15 +12,25 @@
     <properties>
 
         <!--Project-->
-        <project.java.version>11</project.java.version>
         <project.build.Encoding>UTF-8</project.build.Encoding>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+
 
         <!--Plugins-->
-        <surefire.plugin.version>2.22.2</surefire.plugin.version>
+        <junit.version>5.8.1</junit.version>
+        <selenium.java.version>3.141.59</selenium.java.version>
+        <webdriver.manager.version>5.6.3</webdriver.manager.version>
+        <surefire.plugin.version>3.0.0-M5</surefire.plugin.version>
         <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
-        <maven.resources.plugin.version>3.3.1</maven.resources.plugin.version>
-        <maven-checkstyle-plugin>3.1.0</maven-checkstyle-plugin>
-        <findbugs-maven-plugin>3.0.5</findbugs-maven-plugin>
+        <maven.checkstyle.plugin.version>3.1.0</maven.checkstyle.plugin.version>
+        <spotbugs.plugin.version>4.8.2.0</spotbugs.plugin.version>
+        <spotbugs.version>4.8.3</spotbugs.version>
+        <lombok.version>1.18.20</lombok.version>
+        <aspectj.version>1.9.4</aspectj.version>
+        <allure.version>2.13.2</allure.version>
+        <allure.maven>2.10.0</allure.maven>
+        <allure-junit5.version>2.6.0</allure-junit5.version>
 
         <!--Dependencies-->
         <junit.version>5.8.1</junit.version>
@@ -33,6 +43,10 @@
 
         <!--System Properties-->
         <base.url>https://petstore.swagger.io/v2</base.url>
+
+        <!--parallel params:-->
+        <parallel>3</parallel>
+        <thread.count>8</thread.count>
 
     </properties>
 
@@ -112,22 +126,67 @@
 
     <build>
         <plugins>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
+                    <parallel>${parallel}</parallel>
+                    <threadCountMethods>${thread.count}</threadCountMethods>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <reportFormat>plain</reportFormat>
+                    <consoleOutputReporter>
+                        <disable>false</disable>
+                    </consoleOutputReporter>
+                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
+                    <argLine>
+                        -Dfile.encoding=UTF-8
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                    </argLine>
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                     </systemPropertyVariables>
                 </configuration>
-            </plugin>
 
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>me.fabriciorby</groupId>
+                        <artifactId>maven-surefire-junit5-tree-reporter</artifactId>
+                        <version>0.1.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs.plugin.version}</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.github.spotbugs</groupId>
+                        <artifactId>spotbugs</artifactId>
+                        <version>${spotbugs.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>${maven-checkstyle-plugin}</version>
+                <version>${maven.checkstyle.plugin.version}</version>
                 <configuration>
                     <includeTestSourceDirectory>true</includeTestSourceDirectory>
                     <configLocation>${project.build.sourceDirectory}/../resources/checkstyle.xml</configLocation>
@@ -142,28 +201,14 @@
                     </execution>
                 </executions>
             </plugin>
-
             <plugin>
-                <groupId>com.github.spotbugs</groupId>
-                <artifactId>spotbugs-maven-plugin</artifactId>
-                <version>4.8.2.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.github.spotbugs</groupId>
-                        <artifactId>spotbugs</artifactId>
-                        <version>4.8.3</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven.compiler.plugin.version}</version>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven}</version>
                 <configuration>
-                    <source>${project.java.version}</source>
-                    <target>${project.java.version}</target>
-                    <encoding>${project.build.Encoding}</encoding>
+                    <reportVersion>${allure.version}</reportVersion>
+                    <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+                    <allureDownloadUrl>https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip</allureDownloadUrl>
                 </configuration>
             </plugin>
         </plugins>
