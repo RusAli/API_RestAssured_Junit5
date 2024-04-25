@@ -32,7 +32,6 @@
 
 
         <!--System Properties-->
-        <browser>chrome</browser>
         <base.url>https://petstore.swagger.io/v2</base.url>
 
     </properties>
@@ -120,7 +119,6 @@
                 <version>${surefire.plugin.version}</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <browser>${browser}</browser>
                         <base.url>${base.url}</base.url>
                     </systemPropertyVariables>
                 </configuration>
