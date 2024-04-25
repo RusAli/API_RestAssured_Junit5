@@ -35,7 +35,6 @@ timeout(10) {
                         --env-file ./.env \
                         --network=host \
                         -v m2:/root/.m2 \
-                        -v ./allure-results:/home/user/api_tests/target/allure-results \
                         -t api_tests:1.0.0
                     """
             )
@@ -51,7 +50,7 @@ timeout(10) {
                     jdk: '',
                     properties: [],
                     reportBuildPolicy: 'ALWAYS',
-                    results: [[path: './allure-results']]
+                    results: [[path: 'target/allure-results']]
             ])
         }
     }
