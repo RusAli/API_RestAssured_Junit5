@@ -43,7 +43,6 @@
         <assertj-core>3.24.2</assertj-core>
 
 
-
         <!--System Properties-->
         <base.url>https://petstore.swagger.io/v2</base.url>
 
@@ -109,6 +108,17 @@
             <version>${junit.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.qameta.allure</groupId>
+            <artifactId>allure-junit5</artifactId>
+            <version>${allure.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.automatedowl</groupId>
+            <artifactId>allure-environment-writer</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
 
@@ -132,7 +142,8 @@
                     <consoleOutputReporter>
                         <disable>false</disable>
                     </consoleOutputReporter>
-                    <statelessTestsetInfoReporter implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
+                    <statelessTestsetInfoReporter
+                            implementation="org.apache.maven.plugin.surefire.extensions.junit5.JUnit5StatelessTestsetInfoTreeReporter"/>
                     <argLine>
                         -Dfile.encoding=UTF-8
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
@@ -140,7 +151,8 @@
                     <systemPropertyVariables>
                         <base.url>${base.url}</base.url>
                         <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                        <junit.jupiter.execution.parallel.config.fixed.parallelism>${parallel}</junit.jupiter.execution.parallel.config.fixed.parallelism>
+                        <junit.jupiter.execution.parallel.config.fixed.parallelism>${parallel}
+                        </junit.jupiter.execution.parallel.config.fixed.parallelism>
                         <java.version>${maven.compiler.source}</java.version>
                     </systemPropertyVariables>
                 </configuration>
@@ -205,7 +217,9 @@
                 <configuration>
                     <reportVersion>${allure.version}</reportVersion>
                     <resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
-                    <allureDownloadUrl>https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip</allureDownloadUrl>
+                    <allureDownloadUrl>
+                        https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/${allure.version}/allure-commandline-${allure.version}.zip
+                    </allureDownloadUrl>
                 </configuration>
             </plugin>
         </plugins>
