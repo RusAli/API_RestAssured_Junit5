@@ -15,6 +15,7 @@
         <project.build.Encoding>UTF-8</project.build.Encoding>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <allure.results.directory>${project.basedir}/allure-results</allure.results.directory>
 
 
         <!--Plugins-->
@@ -32,6 +33,7 @@
         <allure.maven>2.10.0</allure.maven>
         <allure-junit5.version>2.6.0</allure-junit5.version>
 
+
         <!--Dependencies-->
         <junit.version>5.8.1</junit.version>
         <rest-assured>5.3.0</rest-assured>
@@ -39,6 +41,7 @@
         <lombok>1.18.26</lombok>
         <javafaker>1.0.2</javafaker>
         <assertj-core>3.24.2</assertj-core>
+
 
 
         <!--System Properties-->
@@ -116,6 +119,12 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
+                    <systemProperties>
+                        <property>
+                            <name>allure.results.directory</name>
+                            <value>${project.basedir}/allure-results</value>
+                        </property>
+                    </systemProperties>
                     <parallel>${parallel}</parallel>
                     <threadCountMethods>${thread.count}</threadCountMethods>
                     <testFailureIgnore>true</testFailureIgnore>
