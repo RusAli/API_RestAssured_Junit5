@@ -20,7 +20,7 @@ timeout(10) {
         }
 
         stage("Create configurations") {
-            sh "echo BASE_URL=${env.getProperty('BASE_URL')} > ./.env"
+            sh "echo BASE_API_URL=${env.getProperty('BASE_API_URL')} > ./.env"
         }
 
         stage("Build Docker image") {

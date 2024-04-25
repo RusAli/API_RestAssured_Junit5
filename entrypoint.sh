@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn test -Dbase.url=$BASE_URL
+mvn test -Dbase.url=$BASE_API_URL
