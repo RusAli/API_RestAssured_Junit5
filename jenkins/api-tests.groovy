@@ -45,6 +45,7 @@ timeout(10) {
         }
 
         stage("Publish allure results") {
+            sh "pwd"
             allure([
                     includeProperties: false,
                     jdk: '',
