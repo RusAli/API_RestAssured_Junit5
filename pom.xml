@@ -129,12 +129,6 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.plugin.version}</version>
                 <configuration>
-                    <systemProperties>
-                        <property>
-                            <name>allure.results.directory</name>
-                            <value>${project.basedir}/allure-results</value>
-                        </property>
-                    </systemProperties>
                     <parallel>${parallel}</parallel>
                     <threadCountMethods>${thread.count}</threadCountMethods>
                     <testFailureIgnore>true</testFailureIgnore>
@@ -154,6 +148,7 @@
                         <junit.jupiter.execution.parallel.config.fixed.parallelism>${parallel}
                         </junit.jupiter.execution.parallel.config.fixed.parallelism>
                         <java.version>${maven.compiler.source}</java.version>
+                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
                     </systemPropertyVariables>
                 </configuration>
 
